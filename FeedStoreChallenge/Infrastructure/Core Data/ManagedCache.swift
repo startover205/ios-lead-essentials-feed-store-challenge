@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 @objc(ManagedCache)
-public class ManagedCache: NSManagedObject {
+public final class ManagedCache: NSManagedObject {
 	@NSManaged public var timestamp: Date
 	@NSManaged public var feed: NSOrderedSet
 

@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 @objc(ManagedFeedImage)
-public class ManagedFeedImage: NSManagedObject {
+public final class ManagedFeedImage: NSManagedObject {
 	@NSManaged public var id: UUID
 	@NSManaged public var imageDescription: String?
 	@NSManaged public var location: String?
