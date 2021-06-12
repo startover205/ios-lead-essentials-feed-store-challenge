@@ -10,8 +10,8 @@
 import Foundation
 import CoreData
 
-@objc(ManagedCachçe)
+@objc(ManagedCache)
 public class ManagedCache: NSManagedObject {
-	@NSManaged public var timestamp: Date?
-	@NSManaged public var feed: NSOrderedSet?
+	@NSManaged public var timestamp: Date
+	@NSManaged public var feed: NSOrderedSet
 }
