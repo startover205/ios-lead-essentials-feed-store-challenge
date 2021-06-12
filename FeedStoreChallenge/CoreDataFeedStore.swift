@@ -46,10 +46,13 @@ public final class CoreDataFeedStore: FeedStore {
 	public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
 		let context = self.context
 		context.perform {
-			let cache = ManagedCache(context: context)
-			cache.feed = ManagedFeedImage.images(from: feed, in: context)
-			cache.timestamp = timestamp
 			do {
+				try CoreDataFeedStore.deleteCacheFeedIfNeeded(context: context)
+
+				let cache = ManagedCache(context: context)
+				cache.feed = ManagedFeedImage.images(from: feed, in: context)
+				cache.timestamp = timestamp
+
 				try context.save()
 				completion(nil)
 			} catch {
@@ -59,6 +62,20 @@ public final class CoreDataFeedStore: FeedStore {
 	}
 
 	public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
-		fatalError("Must be implemented")
+		let context = self.context
+		context.perform {
+			do {
+				try CoreDataFeedStore.deleteCacheFeedIfNeeded(context: context)
+				completion(nil)
+			} catch {
+				completion(error)
+			}
+		}
+	}
+
+	private static func deleteCacheFeedIfNeeded(context: NSManagedObjectContext) throws {
+		if let cache = try ManagedCache.find() {
+			context.delete(cache)
+		}
 	}
 }
