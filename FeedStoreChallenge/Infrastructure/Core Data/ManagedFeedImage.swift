@@ -11,13 +11,13 @@ import Foundation
 import CoreData
 
 @objc(ManagedFeedImage)
-internal final class ManagedFeedImage: NSManagedObject {
-	@NSManaged internal var id: UUID
-	@NSManaged internal var imageDescription: String?
-	@NSManaged internal var location: String?
-	@NSManaged internal var url: URL
+final class ManagedFeedImage: NSManagedObject {
+	@NSManaged var id: UUID
+	@NSManaged var imageDescription: String?
+	@NSManaged var location: String?
+	@NSManaged var url: URL
 
-	internal static func images(from feed: [LocalFeedImage], in context: NSManagedObjectContext) -> NSOrderedSet {
+	static func images(from feed: [LocalFeedImage], in context: NSManagedObjectContext) -> NSOrderedSet {
 		NSOrderedSet(array: feed.map {
 			let image = ManagedFeedImage(context: context)
 			image.id = $0.id
@@ -28,7 +28,7 @@ internal final class ManagedFeedImage: NSManagedObject {
 		})
 	}
 
-	internal var local: LocalFeedImage {
+	var local: LocalFeedImage {
 		LocalFeedImage(id: id, description: imageDescription, location: location, url: url)
 	}
 }
