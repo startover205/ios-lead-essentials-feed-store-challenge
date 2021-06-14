@@ -11,15 +11,15 @@ import Foundation
 import CoreData
 
 @objc(ManagedCache)
-internal final class ManagedCache: NSManagedObject {
-	@NSManaged internal var timestamp: Date
-	@NSManaged internal var feed: NSOrderedSet
+final class ManagedCache: NSManagedObject {
+	@NSManaged var timestamp: Date
+	@NSManaged var feed: NSOrderedSet
 
-	internal var localFeed: [LocalFeedImage] {
+	var localFeed: [LocalFeedImage] {
 		return self.feed.compactMap { ($0 as? ManagedFeedImage)?.local }
 	}
 
-	internal static func find() throws -> ManagedCache? {
+	static func find() throws -> ManagedCache? {
 		try ManagedCache.fetchRequest().execute().first as? ManagedCache
 	}
 }
