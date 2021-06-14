@@ -64,7 +64,9 @@ public final class CoreDataFeedStore: FeedStore {
 		perform { context in
 			do {
 				try CoreDataFeedStore.deleteCacheFeedIfNeeded(context: context)
-				try context.save()
+				if context.hasChanges {
+					try context.save()
+				}
 				completion(nil)
 			} catch {
 				context.rollback()
