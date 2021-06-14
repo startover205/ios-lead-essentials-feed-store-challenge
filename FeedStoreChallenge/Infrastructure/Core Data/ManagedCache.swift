@@ -19,7 +19,8 @@ final class ManagedCache: NSManagedObject {
 		return self.feed.compactMap { ($0 as? ManagedFeedImage)?.local }
 	}
 
-	static func find() throws -> ManagedCache? {
-		try ManagedCache.fetchRequest().execute().first as? ManagedCache
+	static func find(in context: NSManagedObjectContext) throws -> ManagedCache? {
+		let request = ManagedCache.fetchRequest()
+		return try context.fetch(request).first as? ManagedCache
 	}
 }

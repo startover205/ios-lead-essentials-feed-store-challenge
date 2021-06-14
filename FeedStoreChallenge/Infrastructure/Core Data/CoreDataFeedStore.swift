@@ -31,7 +31,7 @@ public final class CoreDataFeedStore: FeedStore {
 	public func retrieve(completion: @escaping RetrievalCompletion) {
 		perform { context in
 			do {
-				if let cache = try ManagedCache.find() {
+				if let cache = try ManagedCache.find(in: context) {
 					completion(.found(feed: cache.localFeed, timestamp: cache.timestamp))
 				} else {
 					completion(.empty)
@@ -74,7 +74,7 @@ public final class CoreDataFeedStore: FeedStore {
 	}
 
 	private static func deleteCacheFeedIfNeeded(context: NSManagedObjectContext) throws {
-		if let cache = try ManagedCache.find() {
+		if let cache = try ManagedCache.find(in: context) {
 			context.delete(cache)
 		}
 	}
