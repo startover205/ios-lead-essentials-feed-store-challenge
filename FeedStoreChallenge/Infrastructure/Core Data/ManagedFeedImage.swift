@@ -16,6 +16,7 @@ final class ManagedFeedImage: NSManagedObject {
 	@NSManaged var imageDescription: String?
 	@NSManaged var location: String?
 	@NSManaged var url: URL
+	@NSManaged var cache: ManagedCache
 
 	static func images(from feed: [LocalFeedImage], in context: NSManagedObjectContext) -> NSOrderedSet {
 		NSOrderedSet(array: feed.map {
