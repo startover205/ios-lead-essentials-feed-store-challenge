@@ -24,4 +24,8 @@ final class ManagedCache: NSManagedObject {
 		request.returnsObjectsAsFaults = false
 		return try context.fetch(request).first as? ManagedCache
 	}
+
+	static func deleteCachedFeedIfNeeded(in context: NSManagedObjectContext) throws {
+		try ManagedCache.find(in: context).map(context.delete)
+	}
 }
