@@ -21,6 +21,7 @@ final class ManagedCache: NSManagedObject {
 
 	static func find(in context: NSManagedObjectContext) throws -> ManagedCache? {
 		let request = ManagedCache.fetchRequest()
+		request.returnsObjectsAsFaults = false
 		return try context.fetch(request).first as? ManagedCache
 	}
 }
